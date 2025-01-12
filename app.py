@@ -90,8 +90,9 @@ with st.sidebar:
   input_df = pd.DataFrame(data, index=[0])
   input_marca = pd.concat([input_df, X_raw], axis=0)
 
-with st.expander('Ingrese sucursal'):
-  st.write('Digite Sucursal')
+# se muestra por pantalla los datos seleccinados en la barra lateral
+with st.expander('Datos seleccionado en barra lateral x sucursal'):
+  st.write('Sucursal elegiada y datos')
   input_df
   st.write('datos combinados de Sucursal')
   input_marca

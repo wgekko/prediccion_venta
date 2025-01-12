@@ -18,3 +18,7 @@ secondaryBackgroundColor="#07101c"
 textColor="#b5ff33"
 font="sans serif"
 
+https://github.com/user-attachments/assets/cd29240f-e219-4257-a51d-738439cd7e12
+
+
+

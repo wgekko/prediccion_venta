@@ -78,7 +78,7 @@ with st.sidebar:
   auto = st.slider('auto', 0, 50)
   suv = st.slider('suv', 0, 50)
   camioneta = st.slider('camioneta', 0, 50)
-  vta = st.selectbox('forma de venta', ('contado', 'financiado'))
+  vta = st.selectbox('forma de venta', ('CONTADO', 'FINANCIADO'))
   
   # Create a DataFrame for the input features / se crea un DataFrame para las caracteristica de entrada
   

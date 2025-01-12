@@ -57,14 +57,14 @@ with st.expander('Datos'):
   st.write('detalle de datos')
   df = pd.read_excel('data/data.xlsx')
   df
-  # filtrando por x
-  st.write(' - X - ')
-  X_raw = df.drop('marca', axis=1)
-  X_raw
-  # filtrando por y
-  st.write(' - y - ')
-  y_raw = df['marca']
-  y_raw
+# filtrando por x
+  #st.write(' - X - ')
+X_raw = df.drop('marca', axis=1)
+#X_raw
+# filtrando por y
+#st.write(' - y - ')
+y_raw = df['marca']
+#y_raw
 
 with st.expander('Visualizacion de datos'):
   chart_data = pd.DataFrame(df, columns=['auto', 'suv', 'camioneta'])
@@ -118,13 +118,6 @@ def target_encode(val):
   return target_mapper[val]
 
 y = y_raw.apply(target_encode)
-
-with st.expander('Preparación de datos'):
-  st.write('relacionada  X (ingresado sucursal)')
-  input_row
-  st.write('relacionado y ')
-  y
-
 
 # Model training and inference / modelo de entrenamiento
 ## Train the ML model

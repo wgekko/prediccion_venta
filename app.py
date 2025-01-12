@@ -10,8 +10,6 @@ theme_plotly = None
 
 st.set_page_config(page_title="Prediccion-Ventas", page_icon="img/logo2.png", layout="wide")
 
-
-
 #""" imagen de background"""
 def add_local_background_image(image):
   with open(image, "rb") as image:
@@ -46,7 +44,7 @@ def add_local_sidebar_image(image):
 add_local_sidebar_image("img/fondo1.jpg")
 
 
-st.header('Predicción venta de marcas de Vehiculo x sucursal')
+st.header('Predicción venta de marcas de Vehiculo x Sucursal')
 st.subheader("con modelo de Machine Learning")
 
 st.info('App creada para aplicar modelos de machine learning')
@@ -54,8 +52,6 @@ st.info('App creada para aplicar modelos de machine learning')
 # Set up input widgets
 st.logo(image="img/logo3.png",
       size='large')
-
-
 
 with st.expander('Datos'):
   st.write('detalle de datos')
@@ -78,7 +74,7 @@ with st.expander('Visualizacion de datos'):
 # Input features / caracteristicas de entrada
 with st.sidebar:
   st.header('Seleccione datos a filtrar')
-  sucursal = st.selectbox('Sucursal', ('norte', 'sur', 'este', 'oeste'))
+  sucursal = st.selectbox('Sucursal', ('NORTE', 'SUR', 'ESTE', 'OESTE'))
   auto = st.slider('auto', 0, 50)
   suv = st.slider('suv', 0, 50)
   camioneta = st.slider('camioneta', 0, 50)
@@ -112,11 +108,11 @@ X = df_marca[1:]
 input_row = df_marca[:1]
 
 # Encode y - codificando y
-target_mapper = {'toyota': 0,
-                 'ford': 1,
-                 'renault': 2,
-                 'volkswagen': 3,
-                 'fiat': 4,
+target_mapper = {'TOYOTA': 0,
+                 'FORD': 1,
+                 'RENAULT': 2,
+                 'VOLKSWAGEN': 3,
+                 'FIAT': 4,
                 }
 def target_encode(val):
   return target_mapper[val]
@@ -137,72 +133,75 @@ clf.fit(X, y)
 
 ## Apply model to make predictions / se aplica el modelo de prediccion 
 prediction = clf.predict(input_row)
-prediction_proba = clf.predict_proba(input_row)
+pred_probabilidad = clf.predict_proba(input_row)
+pred_probabilidad = pred_probabilidad*100
 
-df_prediction_proba = pd.DataFrame(prediction_proba)
+df_pred_probabilidad = pd.DataFrame(pred_probabilidad)
 
-df_prediction_proba.columns = ['toyota',
-                 'ford',
-                 'renault',
-                 'volkswagen',
-                 'fiat']
-df_prediction_proba.rename(columns={0: 'toyota',
-                                 1: 'ford',
-                                 2: 'renault',
-                                 3: 'volkswagen',
-                                 4: 'fiat'                                   
+df_pred_probabilidad.columns = ['TOYOTA',
+                 'FORD',
+                 'RENAULT',
+                 'VOLKSWAGEN',
+                 'FIAT']
+df_pred_probabilidad.rename(columns={0: 'TOYOTA',
+                                 1: 'FORD',
+                                 2: 'RENUALT',
+                                 3: 'VOLKSWAGEN',
+                                 4: 'FIAT'                                   
                                  })
 
 # Display predicted marca / muestra la prediccion de la marca
-st.subheader('Predicción por Marca')
-st.dataframe(df_prediction_proba,
+st.subheader('Predicción de Probabilidad por Marca (%)')
+st.dataframe(df_pred_probabilidad,
              column_config={
-               'toyota': st.column_config.ProgressColumn(
-                 'toyota',
+               'TOYOTA': st.column_config.ProgressColumn(
+                 'TOYOTA',
                  format= '%.2f',
                  width='medium',
                  min_value=0,
-                 max_value=1
+                 max_value=100
                ),
-               'ford': st.column_config.ProgressColumn(
-                 'ford',
+               'FORD': st.column_config.ProgressColumn(
+                 'FORD',
                  format='%.2f',
                  width='medium',
                  min_value=0,
-                 max_value=1
+                 max_value=100
                ),
-               'renault': st.column_config.ProgressColumn(
-                 'renault',
+               'RENAULT': st.column_config.ProgressColumn(
+                 'RENAULT',
                  format='%.2f',
                  width='medium',
                  min_value=0,
-                 max_value=1
+                 max_value=100
                ),
-               'volkswagen': st.column_config.ProgressColumn(
-                 'volkswagen',
+               'VOLKSWAGEN': st.column_config.ProgressColumn(
+                 'VOLKSWAGEN',
                  format='%.2f',
                  width='medium',
                  min_value=0,
-                 max_value=1
+                 max_value=100
                ),
-                'fiat': st.column_config.ProgressColumn(
-                 'fiat',
+                'FIAT': st.column_config.ProgressColumn(
+                 'FIAT',
                  format='%.2f',
                  width='medium',
                  min_value=0,
-                 max_value=1
+                 max_value=100
                ),
              }, hide_index=True)
 
 
-marca_df = np.array(['toyota', 'ford', 'renault','volkswagen', 'fiat'])
-st.success(str(marca_df[prediction][0]))
+marca_df = np.array(['TOYOTA', 'FORD', 'RENAULT','VOLKSWAGEN', 'FIAT'])
+container = st.container (border=True)
+container.success(str(marca_df[prediction][0]))
+
 
 # DataFrame display- -mostrar los datos basicos de los  calculos
 with st.expander('Ver datos (Dataframe)-descagar en formato csv'):
     #st.dataframe(df_filtered)
     st.dataframe(df)
-    st.dataframe(df_prediction_proba)
+    st.dataframe(df_pred_probabilidad)
 
 
 st.write("---")

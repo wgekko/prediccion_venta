@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import base64
 from sklearn.ensemble import RandomForestClassifier
+import pathlib
 import warnings
 warnings.simplefilter("ignore", category=FutureWarning)
 
@@ -43,10 +44,19 @@ def add_local_sidebar_image(image):
 
 add_local_sidebar_image("img/fondo1.jpg")
 
+#-------------- animacion con css de los botones de footer ------------------------
 
-st.header('Predicción venta de marcas de Vehiculo x Sucursal')
-st.subheader("con modelo de Machine Learning")
+with open('asset/styles.css') as f:
+        css = f.read()
+st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 
+
+
+st.button("Predicción venta de marcas de Vehiculo x Sucursal" ,key="pulse")    
+#st.header('Predicción venta de marcas de Vehiculo x Sucursal')
+st.write("---") #st.write("##")
+st.button("con modelo de Machine Learning", key="inpulse")
+st.write("---")
 st.info('App creada para aplicar modelos de machine learning')
 
 # Set up input widgets
@@ -73,7 +83,7 @@ with st.expander('Visualizacion de datos'):
   
 # Input features / caracteristicas de entrada
 with st.sidebar:
-  st.header('Seleccione datos a filtrar')
+  st.button('Seleccione datos a filtrar', key="topulse")
   sucursal = st.selectbox('Sucursal', ('NORTE', 'SUR', 'ESTE', 'OESTE'))
   auto = st.slider('auto', 0, 50)
   suv = st.slider('suv', 0, 50)
@@ -145,6 +155,7 @@ df_pred_probabilidad.rename(columns={0: 'TOYOTA',
                                  })
 
 # Display predicted marca / muestra la prediccion de la marca
+st.write("---")
 st.subheader('Predicción de Probabilidad por Marca (%)')
 st.dataframe(df_pred_probabilidad,
              column_config={
@@ -198,15 +209,15 @@ with st.expander('Ver datos (Dataframe)-descagar en formato csv'):
     st.dataframe(df_pred_probabilidad)
 
 
-st.write("---")
-with st.container():
+
   #st.write("---")
-  st.write("&copy; - derechos reservados -  2024 -  Walter Gómez - FullStack Developer - Data Science - Business Intelligence")
+st.write("&copy; - derechos reservados -  2024 -  Walter Gómez - FullStack Developer - Data Science - Business Intelligence")
   #st.write("##")
-  left, right = st.columns(2, gap='small', vertical_alignment="bottom")
-  with left:
-    #st.write('##')
-    st.link_button("Mi LinkedIn", "https://www.linkedin.com/in/walter-gomez-fullstack-developer-datascience-businessintelligence-finanzas-python/")
-  with right: 
-     #st.write('##') 
-    st.link_button("Mi Porfolio", "https://walter-portfolio-animado.netlify.app/")
+left, right = st.columns(2, gap='medium', vertical_alignment="center")
+with left:
+      url="https://www.linkedin.com/in/walter-gomez-fullstack-developer-datascience-businessintelligence-finanzas-python/"            
+      st.link_button("Mi LinkedIn", url, use_container_width= True)
+with right: 
+      url1= "https://walter-portfolio-animado.netlify.app/"      
+      st.link_button("Mi Portfolio", url1, use_container_width= True)
+    
